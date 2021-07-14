@@ -47,6 +47,7 @@ class _ProfileViewState extends State<ProfileView> {
       floatingActionButton: FloatingActionButton(
         onPressed: buttonPressed,
         backgroundColor: AppColors.primaryColor,
+        child: const Icon(Icons.add),
       ),
       body: SafeArea(
         child: Padding(
