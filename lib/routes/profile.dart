@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/model/post.dart';
+import 'package:flutter_application_2/ui/post_tile.dart';
 import 'package:flutter_application_2/util/colors.dart';
 
 class ProfileView extends StatefulWidget {
@@ -10,10 +11,14 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  //Post item1 = Post(text: 'first post', date: '14th July 2021', likes: 5);
-  //Post item2 = Post.comments(comments: 5);
-
   late int postCount = 0;
+
+  List<Post> posts = [
+    Post(text: 'Hello World 1', date: '19 March', likes: 30, comments: 10),
+    Post(text: 'Hello World 2', date: '18 March', likes: 20, comments: 20),
+    Post(text: 'Hello World 3', date: '17 March', likes: 10, comments: 30),
+  ];
+
   void buttonPressed() {
     setState(() {
       postCount++;
@@ -30,6 +35,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    postCount = posts.length;
     print('BUILD: $postCount');
 
     return Scaffold(
@@ -47,7 +53,7 @@ class _ProfileViewState extends State<ProfileView> {
       floatingActionButton: FloatingActionButton(
         onPressed: buttonPressed,
         backgroundColor: AppColors.primaryColor,
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
       body: SafeArea(
         child: Padding(
@@ -61,44 +67,45 @@ class _ProfileViewState extends State<ProfileView> {
                 thickness: 0.5,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
                     children: [
                       Text(
-                        postCount.toString(),
+                        '$postCount',
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 17.0,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.headingColor,
+                          color: AppColors.textColor,
                         ),
                       ),
                       Text(
                         'posts',
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 13,
                           fontWeight: FontWeight.w300,
-                          color: AppColors.headingColor,
+                          color: AppColors.textColor,
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(width: 30),
                   Column(
                     children: [
                       Text(
                         '12345',
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 17.0,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.headingColor,
+                          color: AppColors.textColor,
                         ),
                       ),
                       Text(
                         'followers',
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 13,
                           fontWeight: FontWeight.w300,
-                          color: AppColors.headingColor,
+                          color: AppColors.textColor,
                         ),
                       ),
                     ],
@@ -110,15 +117,15 @@ class _ProfileViewState extends State<ProfileView> {
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.headingColor,
+                          color: AppColors.textColor,
                         ),
                       ),
                       Text(
                         'following',
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 13,
                           fontWeight: FontWeight.w300,
-                          color: AppColors.headingColor,
+                          color: AppColors.textColor,
                         ),
                       ),
                     ],
@@ -130,6 +137,17 @@ class _ProfileViewState extends State<ProfileView> {
                 height: 32,
                 thickness: 0.5,
               ),
+              Column(
+                children: posts
+                    .map((post) => PostTile(
+                        post: post,
+                        delete: () {
+                          setState(() {
+                            posts.remove(post);
+                          });
+                        }))
+                    .toList(),
+              )
             ],
           ),
         ),
@@ -167,13 +185,14 @@ class _ProfileViewState extends State<ProfileView> {
                 Icon(
                   Icons.alternate_email,
                   color: AppColors.primaryColor,
+                  size: 17,
                 ),
                 Text(
                   'KKURT',
                   style: TextStyle(
                     fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.headingColor,
+                    fontWeight: FontWeight.w300,
+                    color: AppColors.textColor,
                   ),
                 ),
               ],
